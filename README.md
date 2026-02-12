@@ -8,25 +8,31 @@ It also allows compliance analysts to review alerts, make decisions, add remarks
 Overall, the system mimics the core workflow of real-world AML monitoring tools used in financial institutions.
 
 
-🧠 AML Detection Workflow
-1. Transaction Input
-Users can add transactions through an HTML form or upload data using a CSV file. Each transaction contains fields such as transaction ID, sender, receiver, amount, currency, country, transaction time, and type.
-2. Data Validation
-The system performs required field checks, verifies numeric values, prevents duplicate entries, and normalizes currency formats before processing.
-3. Feature Engineering
-After validation, the system calculates transaction frequency per user, amount deviation from average behavior, country-based risk scores, velocity checks, and structuring patterns involving multiple small transactions.
-4. Risk Scoring Engine
-Each transaction is assigned a score between 0 and 100 based on amount risk, frequency risk, country risk, and behavioral anomalies.
-Risk levels are categorized as Low, Medium, High, or Critical.
-Every alert includes a detailed score breakdown for transparency.
-5. Rule-Based Checks
-Additional AML rules detect large transactions, high-risk countries, rapid transaction bursts, dormant account activity, and unusual timing patterns.
-6. Alert Generation
-If a transaction exceeds the defined threshold, an alert is automatically created and stored locally. Alerts include the risk score, triggered rules, and a clear explanation.
-7. Analyst Review
-Compliance officers can approve or reject alerts, update their status, and add remarks.
-8. Audit Logging
-All actions—such as transaction creation, alert generation, login activity, and analyst decisions—are timestamped and stored for review.
+🧠 AML Detection Workflow :
+
+Step 1: Data Ingestion 
+The system collects transaction data and account information in either real-time or batch 
+mode. 
+Step 2: Data Preprocessing 
+The data is cleaned and prepared by: -Removing inconsistencies -Handling missing values -Normalizing transaction amounts -Extracting relevant features 
+Step 3: Feature Engineering 
+Key behavioral and network-related features are generated, such as: 
+-Transaction frequency -Average transaction value -Account activity patterns -Transaction connectivity metrics 
+Step 4: Behavioral Analysis 
+The agent compares current transaction patterns with historical behavior to detect unusual 
+deviations. 
+Step 5: Network Graph Analysis 
+A transaction graph is constructed to identify: -Suspicious clusters -Circular fund movements -High-risk connected accounts 
+Step 6: Risk Score Calculation 
+The system combines behavioral and network insights to generate a dynamic risk score for 
+each transaction or account. 
+Step 7: Explainable Report Generation 
+If a transaction or account crosses a risk threshold, the system generates a structured report 
+explaining: 
+●  Why it was flagged 
+●  Risk score breakdown 
+●  Detected suspicious patterns 
+
 
 🎨 User Interface
 The system features a professional banking-style interface with a gradient blue theme and a clean layout. It includes:
@@ -35,9 +41,56 @@ Risk distribution charts (bar and pie using Canvas)
 Structured sidebar navigation
 Separate pages for transactions, alerts, SAR reports, and audit logs
 
+
+Key Use Cases of AML Systems
+1) Transaction Monitoring
+Continuously monitor customer transactions in real-time to detect suspicious patterns such as unusually large transfers or rapid fund movement.
+2) High-Risk Country Transactions
+Flag transactions involving countries with high corruption, sanctions, or terrorism risk.
+3) Sanctions Screening
+Check customers and transactions against global sanctions lists (OFAC, UN, EU, etc.).
+4) Suspicious Activity Report (SAR) Generation
+Automatically generate compliance reports for regulatory authorities when suspicious behavior is detected.
+5) Fraud & Behavioral Anomaly Detection
+Detect unusual customer behavior, such as:
+Sudden high-value transfers
+Dormant account activation
+Unusual transaction times
+6) Money Laundering Stage Detection
+AML systems detect the 3 stages:
+Placement (introducing illegal money)
+Layering (moving funds through complex transactions)
+Integration (reintroducing funds as legitimate)
+7) Risk-Based Customer Profiling
+Assign risk scores to customers based on transaction history, geography, and behavior.
+8) Audit & Regulatory Compliance
+Maintain detailed logs for investigation and regulatory review.
+
 🔐 Security & Access Control
 Role-based access is implemented with three roles:
 Analyst – full operational access
 Auditor – read-only access
 Admin – complete system control
 Authentication is simulated using session storage.
+
+
+Project Structure :
+cyber-aml-system/
+│
+├── index.html                # Main application entry point
+│
+├── css/                      # Styling Layer
+│   ├── style.css             # Core UI styles (layout, theme, components)
+│   └── charts.css            # Chart-specific styling
+│
+├── js/                       # Application Logic Layer
+│   ├── app.js                # Main controller & UI orchestration
+│   ├── aml_engine.js         # Risk scoring & AML rule engine
+│   ├── auth.js               # Authentication & role-based access
+│   └── store.js              # LocalStorage data management
+│
+└── README.md                 # Project documentation
+
+
+
+
