@@ -76,20 +76,20 @@ Authentication is simulated using session storage.
 
 Project Structure :
 cyber-aml-system/
-│
-├── index.html                # Main application entry point
-│
-├── css/                      # Styling Layer
-│   ├── style.css             # Core UI styles (layout, theme, components)
-│   └── charts.css            # Chart-specific styling
-│
-├── js/                       # Application Logic Layer
-│   ├── app.js                # Main controller & UI orchestration
-│   ├── aml_engine.js         # Risk scoring & AML rule engine
-│   ├── auth.js               # Authentication & role-based access
-│   └── store.js              # LocalStorage data management
-│
-└── README.md                 # Project documentation
+index.html                # Main application entry point
+
+css/                      # Styling Layer
+style.css             # Core UI styles (layout, theme, components)
+charts.css            # Chart-specific styling
+
+js/                       # Application Logic Layer
+app.js                # Main controller & UI orchestration
+aml_engine.js         # Risk scoring & AML rule engine
+auth.js               # Authentication & role-based acces
+store.js              # LocalStorage data management
+
+
+README.md                 # Project documentation
 
 
 
