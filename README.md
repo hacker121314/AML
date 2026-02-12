@@ -6,6 +6,8 @@ Anti-Money Laundering (AML) System Project Introduction This project delivers a 
 The objective of this project is to develop a complete Anti-Money Laundering (AML) Detection System that simulates how real banking compliance software works. The system is designed to analyze financial transactions, calculate risk scores using weighted logic, detect suspicious activities, and automatically generate alerts when risk thresholds are exceeded.
 It also allows compliance analysts to review alerts, make decisions, add remarks, and maintain proper audit records. The platform includes dashboards and explainable risk breakdowns so users can clearly understand why a transaction was flagged.
 Overall, the system mimics the core workflow of real-world AML monitoring tools used in financial institutions.
+
+
 🧠 AML Detection Workflow
 1. Transaction Input
 Users can add transactions through an HTML form or upload data using a CSV file. Each transaction contains fields such as transaction ID, sender, receiver, amount, currency, country, transaction time, and type.
