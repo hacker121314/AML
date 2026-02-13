@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRAUDNEXUS System</title>
+    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/charts.css?v=3">
+</head>
+
+<body>
+
+    <!-- Cover Page -->
+    <div id="cover-page">
+        <div class="cover-content">
+            <h1 class="glitch-text" data-text="FRAUDNEXUS">FRAUDNEXUS</h1>
+            <p class="blink-text">PRESS [ENTER] TO INITIALIZE</p>
+        </div>
+    </div>
+
+    <!-- Authentication Screen -->
+    <div id="auth-screen" class="hidden">
+        <div class="login-card">
+            <h2>FRAUDNEXUS Portal Login</h2>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+
+                <!-- Mock CAPTCHA -->
+                <div class="captcha-widget" id="captcha-container">
+                    <div class="captcha-left">
+                        <div class="captcha-checkbox" id="captcha-box">
+                            <div class="spinner hidden"></div>
+                            <div class="checkmark hidden">L</div> <!-- Using L shape or CSS checkmark -->
+                        </div>
+                        <div class="captcha-label">I'm not a robot</div>
+                    </div>
+                    <div class="captcha-brand">
+                        <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="" width="24"
+                            style="opacity: 0.7;">
+                        <span>reCAPTCHA</span>
+                        <div class="captcha-terms">Privacy - Terms</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn" id="login-btn" disabled
+                    style="opacity: 0.5; cursor: not-allowed;">Login</button>
+                <p style="margin-top: 15px; text-align: center; color: #aaa;">
+                    Don't have an account? <a href="#" id="show-register-link" style="color: var(--accent-blue);">Sign
+                        Up</a>
+                </p>
+            </form>
+
+        </div>
+
+        <!-- Registration Modal -->
+        <div id="register-modal" class="modal hidden">
+            <div class="modal-content" style="max-width: 400px;">
+                <span class="close-modal" id="close-register">&times;</span>
+                <h2>Create Account</h2>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="reg-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="reg-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select id="reg-role"
+                            style="width: 100%; padding: 10px; background: #222; border: 1px solid #444; color: #fff; border-radius: 4px;">
+                            <option value="analyst">Analyst</option>
+                            <option value="auditor">Auditor</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="main-app" class="hidden">
+
+        <!-- Header (Investopedia Style) -->
+        <header class="site-header">
+            <div class="header-inner">
+                <div class="brand">FRAUDNEXUS</div>
+                <div class="user-profile">
+                    <span id="user-display">User: Analyst</span>
+                    <button id="reset-btn" class="btn btn-small btn-high"
+                        style="background: #444; color: #fff; margin-right: 5px;">Reset Data</button>
+                    <button id="logout-btn" class="btn btn-small btn-danger">Logout</button>
+                </div>
+            </div>
+            <div class="subheader">
+                <span><strong>Topic:</strong> Financial Security</span>
+                <span style="margin: 0 10px;">•</span>
+                <span><strong>Status:</strong> System Online</span>
+            </div>
+        </header>
+
+        <div class="layout-container">
+
+            <!-- Left Sidebar (Table of Contents) -->
+            <aside class="toc-sidebar">
+                <h3>Table of Contents</h3>
+                <nav id="toc-nav">
+                    <a href="#" class="nav-link active" data-view="dashboard">Dashboard Overview</a>
+                    <a href="#" class="nav-link" data-view="transactions">Transactions Monitor</a>
+                    <a href="#" class="nav-link" data-view="alerts">Alert Management</a>
+                    <a href="#" class="nav-link" data-view="sar">SAR Reports</a>
+                    <a href="#" class="nav-link" data-view="audit">Audit Logs</a>
+                </nav>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="article-content">
+
+                <!-- Dashboard View -->
+                <div id="dashboard-view" class="view-section">
+                    <div class="article-header">
+                        <h1>System Dashboard: Real-time Analysis</h1>
+                        <p class="byline">By FRAUDNEXUS | Updated Just Now</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="card">
+                            <div class="stat-value" id="total-tx-count">0</div>
+                            <div class="stat-label">Total Transactions</div>
+                        </div>
+                        <div class="card">
+                            <div class="stat-value" id="alert-count">0</div>
+                            <div class="stat-label">Open Alerts</div>
+                        </div>
+                        <div class="card">
+                            <div class="stat-value" id="sar-count">0</div>
+                            <div class="stat-label">SARs Filed</div>
+                        </div>
+                    </div>
+                    <!-- recent txs card -->
+                    <div class="card" style="margin-top:20px;">
+                        <h3>Recent Transactions</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Time</th>
+                                    <th>Sender</th>
+                                    <th>Receiver</th>
+                                    <th>Amount</th>
+                                    <th>Risk Level</th>
+                                    <th>History</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-tx-body">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card" style="margin-top: 20px;">
+                        <h3>Risk Overview</h3>
+                        <div style="display: flex; gap: 50px; align-items: center; margin-top: 20px;">
+                            <div class="donut-container" style="text-align: center;">
+                                <div class="donut-chart">
+                                    <div class="donut-hole">Risk</div>
+                                </div>
+                                <div class="chart-legend"
+                                    style="margin-top: 15px; font-size: 0.8rem; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                                    <span style="color: var(--risk-low)">● Normal</span>
+                                    <span style="color: var(--risk-medium)">● Suspicious</span>
+                                    <span style="color: var(--risk-high)">● High Risk</span>
+                                    <span style="color: var(--risk-critical)">● Probable ML</span>
+                                </div>
+                            </div>
+                            <div style="flex: 1; display: flex; align-items: flex-end;">
+                                <!-- Y-Axis Labels -->
+                                <div class="y-axis"
+                                    style="display: flex; flex-direction: column; justify-content: space-between; height: 200px; padding-right: 10px; font-size: 0.7rem; color: var(--text-muted); text-align: right;">
+                                    <span>100%</span>
+                                    <span>75%</span>
+                                    <span>50%</span>
+                                    <span>25%</span>
+                                    <span>0%</span>
+                                </div>
+                                <!-- Chart -->
+                                <div class="bar-chart" style="flex: 1;">
+                                    <div class="bar-wrapper">
+                                        <div class="bar" style="height: 0%;"></div>
+                                        <div class="bar-label">Mon</div>
+                                    </div>
+                                    <div class="bar-wrapper">
+                                        <div class="bar" style="height: 0%;"></div>
+                                        <div class="bar-label">Tue</div>
+                                    </div>
+                                    <div class="bar-wrapper">
+                                        <div class="bar" style="height: 0%;"></div>
+                                        <div class="bar-label">Wed</div>
+                                    </div>
+                                    <div class="bar-wrapper">
+                                        <div class="bar" style="height: 0%;"></div>
+                                        <div class="bar-label">Thu</div>
+                                    </div>
+                                    <div class="bar-wrapper">
+                                        <div class="bar" style="height: 0%;"></div>
+                                        <div class="bar-label">Fri</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transactions View -->
+                <div id="transactions-view" class="view-section hidden">
+                    <div class="article-header">
+                        <h1>Transactions Monitor</h1>
+                        <p class="byline">Live Feed</p>
+                    </div>
+
+                    <div class="card mb-2" style="margin-bottom: 20px;">
+                        <h3>Simulate Transaction</h3>
+                        <form id="tx-form"
+                            style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap: 10px; align-items: end;">
+                            <div class="form-group">
+                                <label>Sender</label>
+                                <input type="text" name="sender" class="form-control" placeholder="Sender Name"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label>Receiver</label>
+                                <input type="text" name="receiver" class="form-control" placeholder="Receiver Name"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label>Bank Account</label>
+                                <input type="text" name="bankAccount" class="form-control" placeholder="Account #" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Amount ($)</label>
+                                <input type="number" name="amount" class="form-control" placeholder="0.00" required>
+                            </div>
+                            <button type="submit" class="btn btn-success" style="height: 38px;">Process</button>
+                        </form>
+                    </div>
+
+                    <div class="card">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Time</th>
+                                    <th>Sender</th>
+                                    <th>Receiver</th>
+                                    <th>Bank Account</th>
+                                    <th>Amount</th>
+                                    <th>Risk Level</th>
+                                    <th>History</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tx-table-body">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Alerts View -->
+                <div id="alerts-view" class="view-section hidden">
+                    <div class="article-header">
+                        <h1>Alert Management</h1>
+                        <p class="byline">Review Pending Items</p>
+                    </div>
+                    <div class="card">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Alert ID</th>
+                                    <th>Tx Ref</th>
+                                    <th>Reason</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="alerts-table-body">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SAR View -->
+                <div id="sar-view" class="view-section hidden">
+                    <div class="article-header">
+                        <h1>Suspicious Activity Reports (SAR)</h1>
+                        <p class="byline">Regulatory Filings</p>
+                    </div>
+                    <div id="sar-list">
+                        <!-- SAR Cards -->
+                    </div>
+                </div>
+
+                <!-- Audit View -->
+                <div id="audit-view" class="view-section hidden">
+                    <div class="article-header">
+                        <h1>System Audit Logs</h1>
+                        <p class="byline">Secure Trail</p>
+                    </div>
+                    <div class="card">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>User</th>
+                                    <th>Action</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody id="audit-table-body">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/store.js?v=3"></script>
+    <script src="js/baseline_engine.js?v=3"></script>
+    <script src="js/pattern_detector.js?v=3"></script>
+    <script src="js/network_analyzer.js?v=3"></script>
+    <script src="js/evidence_engine.js?v=3"></script>
+    <script src="js/alert_generator.js?v=3"></script>
+    <script src="js/aml_engine.js?v=3"></script>
+    <script src="js/auth.js?v=3"></script>
+    <script src="js/app.js?v=3"></script>
+
+    <script>
+        // Cover Page Logic
+        document.addEventListener('keydown', (e) => {
+            const cover = document.getElementById('cover-page');
+            const auth = document.getElementById('auth-screen');
+
+            // Allow Enter key to dismiss cover page
+            if (e.key === 'Enter' && !cover.classList.contains('hidden') && !cover.classList.contains('fade-out')) {
+                // 1. Reveal Auth Screen background (behind cover)
+                auth.classList.remove('hidden');
+
+                // 2. Start fading out cover
+                cover.classList.add('fade-out');
+
+                // 3. Trigger slow fade-in of Login Card
+                setTimeout(() => {
+                    auth.classList.add('visible');
+                }, 100);
+
+                // 4. Cleanup Cover Page after transition
+                setTimeout(() => {
+                    cover.classList.add('hidden');
+                }, 800);
+            }
+        });
+
+        // Mock CAPTCHA Logic
+        let captchaVerified = false;
+        const captchaBox = document.getElementById('captcha-box');
+        const loginBtn = document.getElementById('login-btn');
+
+        captchaBox.addEventListener('click', () => {
+            if (captchaVerified) return;
+
+            // 1. Show Spinner
+            const spinner = captchaBox.querySelector('.spinner');
+            spinner.classList.remove('hidden');
+
+            // 2. Simulate Network Delay
+            setTimeout(() => {
+                spinner.classList.add('hidden');
+
+                // 3. Show Checkmark
+                const checkmark = captchaBox.querySelector('.checkmark');
+                checkmark.classList.remove('hidden');
+                captchaBox.classList.add('checked');
+
+                // 4. Enable Login
+                captchaVerified = true;
+                loginBtn.disabled = false;
+                loginBtn.style.opacity = '1';
+                loginBtn.style.cursor = 'pointer';
+            }, 1500);
+        });
+
+        // Init Login
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!captchaVerified) {
+                alert("Please verify you are human.");
+                return;
+            }
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            const res = window.Auth.login(u, p);
+            if (res.success) {
+                document.getElementById('user-display').textContent = `User: ${res.user.username} (${res.user.role})`;
+                window.App.navigateTo('dashboard');
+            } else {
+                alert(res.message);
+            }
+        });
+    </script>
+</body>
+
+</html>
